@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import Index from './pages/home/index'
+// import Index from './pages/home/index'
+import Index from './pages/index'
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -28,7 +29,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/home/index',
+      'pages/index/index',
       'pages/profile/index'
     ],
     window: {
@@ -40,7 +41,7 @@ class App extends Component {
     tabBar: {
       list: [
         {
-          pagePath: 'pages/home/index',
+          pagePath: 'pages/index/index',
           text: '首页',
           iconPath: './images/tabbar/video_nor.png',
           selectedIconPath: './images/tabbar/video_sel.png'

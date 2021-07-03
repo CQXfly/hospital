@@ -6,7 +6,7 @@ export default class Index extends Component {
     
     render() {
       return (
-        <View>test</View>
+        <View>test你  快看看</View>
       )
     }
 }
