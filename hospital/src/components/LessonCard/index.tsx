@@ -1,6 +1,6 @@
 import { View, Text, Image } from '@tarojs/components'
-import { Component } from 'react'
-import { CardProps } from 'src/common/HomeInterfaces'
+import { Component } from '@tarojs/taro'
+import { CardProps } from '../../common/HomeInterfaces'
 
 export default class LessonCardView extends Component<CardProps> {
     render () {

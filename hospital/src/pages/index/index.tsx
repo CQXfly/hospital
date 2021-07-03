@@ -1,10 +1,9 @@
-// import { Component } from 'react'
-import { Component } from 'react'
+import { Component } from '@tarojs/taro'
 import { View, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import { GetLessonListRequest } from '../../Common/Server'
-import { LessonModel} from 'src/common/HomeInterfaces'
-import { HomeCardView } from 'src/components'
+import { GetLessonListRequest } from '../../common/Server'
+import { LessonModel} from '../../common/HomeInterfaces'
+
+import { HomeCardView } from '../../components'
 
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './index.scss'
@@ -80,7 +79,7 @@ export default class Index extends Component<MyProps, MyState> {
   cardClick(lesson: LessonModel) {
     console.log("what's card")
     Taro.navigateTo({
-      url: `/pages/lessonDetail/lessonDetail?title=${lesson.title}&info=${lesson.info}&imageurl=${lesson.imageUrl}&videourl=${lesson.videoUrl}`
+      url: `/pages/detail/lessonDetail?title=${lesson.title}&info=${lesson.info}&imageurl=${lesson.imageUrl}&videourl=${lesson.videoUrl}`
     })
   }
 
@@ -102,12 +101,9 @@ export default class Index extends Component<MyProps, MyState> {
                 <View onClick={()=>{
                   that.cardClick(card)
                 }}>
-                  <HomeCardView title={card.title} image={card.imageUrl} update={card.updatedAt}>
-                  </HomeCardView>
-                  {/* <LessonCardView title={card.title} image={card.imageUrl} update={card.updatedAt}></LessonCardView> */}
+                  <HomeCardView title={card.title} image={card.imageUrl} update={card.updatedAt} />
                 </View>
               )
-              
             })}
           </ScrollView>
         </View>

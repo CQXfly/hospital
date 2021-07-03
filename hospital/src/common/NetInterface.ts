@@ -13,6 +13,7 @@ export interface PatientModel {
     contact: string
     address: string
     age: number
+    avatar: string
 }
 
 export interface DoctorModel {
