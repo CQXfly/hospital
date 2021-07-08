@@ -28,7 +28,7 @@ export interface UserLoginResponse {
     type: number
 }
 
-export interface UserReigsterPatientRequest {
+export interface UserPatientModel {
     wxid: string
     age: number
     name: string
@@ -37,7 +37,7 @@ export interface UserReigsterPatientRequest {
     gender?: boolean
 }
 
-export interface UserReigsterDoctorRequest {
+export interface UserDoctorModel {
     wxid: string
     name: string
     contact?: string
@@ -49,3 +49,36 @@ export interface GetClockInRecordDatesRequest {
     startDate: string, // 2012-12-12
     endDate: string
 }
+
+export interface RecordClockInRequest {
+    uid: string,
+    date: string, // yyyy-mm-dd hh:ss
+    duration: number,
+    lessonid: string
+}
+
+export interface RecordClockInResponse {
+    createdAt: string,
+    updatedAt: string,
+    id: string,
+    patientId: string,
+    date: string,
+    lessonId: string,
+    training_time: string,
+}
+
+export interface UserLoginResponse {
+    userInfo: UserPatientModel | UserDoctorModel
+    type: number
+}
+// "createdAt": "2021-07-08T09:31:20.000Z",
+// "updatedAt": "2021-07-08T09:31:20.000Z",
+// "id": "9",
+// "gender": 1,
+// "name": "王二狗",
+// "contact": "110",
+// "address": "address",
+// "age": 22,
+// "doctor_id": null,
+// "wxID": "245",
+// "type": 1
