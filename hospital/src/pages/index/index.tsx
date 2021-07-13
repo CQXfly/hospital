@@ -5,7 +5,7 @@ import { LessonModel} from '../../common/HomeInterfaces'
 
 import { HomeCardView } from '../../components'
 
-import "taro-ui/dist/style/components/button.scss" // 按需引入
+// import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './index.scss'
 
 interface MyProps {
@@ -17,6 +17,9 @@ interface MyState {
 }
 
 export default class Index extends Component<MyProps, MyState> {
+  config = {
+    navigationBarTitleText: '首页'
+  }
   pageIndex: number = 1
   constructor(props: MyProps) {
     super(props)

@@ -1,5 +1,5 @@
 // import { Component } from 'react'
-import { View, Text, ScrollView, Image, CoverImage, Video } from '@tarojs/components'
+import { View, Text, Image, Video } from '@tarojs/components'
 import Taro, {Component, VideoContext} from '@tarojs/taro'
 import play from '../../images/detail/play.jpg'
 import './lessonDetail.scss' 

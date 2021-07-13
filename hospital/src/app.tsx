@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 // import Index from './pages/home/index'
-import Index from './pages/index'
+// import Index from './pages/index'
+import Register from './pages/register/register'
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -29,10 +30,12 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/register/register',
       'pages/index/index',
       'pages/profile/index',
       'pages/detail/lessonDetail',
-      'pages/signin/signin'
+      'pages/signin/signin',
+      'pages/diseaseHistory/diseaseHistory'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -62,7 +65,8 @@ class App extends Component {
   // 请勿修改此函数
   render () {
     return (
-      <Index />
+      // <Index />
+      <Register/>
     )
   }
 }

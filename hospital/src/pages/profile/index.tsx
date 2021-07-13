@@ -1,11 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { Header } from '../../components'
 import { AtGrid } from "taro-ui"
 
 import {PatientModel} from '../../common/NetInterface'
 import './index.scss'
-import 'taro-ui/dist/style/components/grid.scss'
+
 import info from '../../images/profile/profile_info.png'
 import doctor from '../../images/profile/profile_doctor.png'
 import signin from '../../images/profile/profile_signin.png'
@@ -18,11 +18,22 @@ export default class Mine extends Component<PatientModel> {
         navigationBarTitleText: '我的'
     }
     selectItem(obj, index) {
-        if (index == 2) {
-            Taro.navigateTo({
-                url: '/pages/signin/signin'
-            })
+        var page = ''
+        switch (index) {
+            case 0:
+                page = '/pages/diseaseHistory/diseaseHistory'
+                break
+            case 1:
+                break
+            case 2:
+                page = '/pages/signin/signin'
+                break
+            case 3:
+                break
         }
+        Taro.navigateTo({
+            url: page
+        })
         console.log(index, obj)
     }
     render() {
