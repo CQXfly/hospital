@@ -23,10 +23,19 @@ export default class Register extends Component {
         super(...arguments)
     }
 
-    handleChange(value) {
-        this.setState({
-            value
-        })
+    handleChange(content, input) {
+        console.log(content, input, this.state.name)
+        if (content == 'name') {
+            this.setState({
+                name: input
+            })
+        }else{
+            this.setState({
+                age: input
+            })
+        }
+        
+        return input
     }
 
     handleGender(value: Array<string>) {
@@ -39,19 +48,19 @@ export default class Register extends Component {
         if (gen == 'female') {
             res = 'male'
         }
-        console.log(value)
+        console.log(res)
         this.setState({
             gender: res
         })
     }
 
-    onSubmit(event) {
+    submitClick() {
         Taro.switchTab({
             url:'/pages/index/index'
         })
     }
 
-    onReset(event) {
+    resetClick() {
         this.setState({
             name: '',
             age: '',
@@ -61,12 +70,33 @@ export default class Register extends Component {
         console.log(this.state)
     }
 
+    // onSubmit(event) {
+    //     Taro.switchTab({
+    //         url:'/pages/index/index'
+    //     })
+    // }
+
+    // onReset(event) {
+    //     this.setState({
+    //         name: '',
+    //         age: '',
+    //         gender: 'male',
+    //         phone: ''
+    //     })
+    //     console.log(this.state)
+    // }
+
+    valid() {
+        console.log(this.state.name, this.state.age)
+        return this.state.name.length > 0 && this.state.age.length > 0
+    }
+
     render() {
         return (
             <View className='bg'>
                 <AtForm
-                onSubmit={this.onSubmit.bind(this)}
-                onReset={this.onReset.bind(this)}>
+                className='form-bg'>
+                <View className='top-part'>
                 <AtInput
                     required
                     name='name' 
@@ -91,9 +121,19 @@ export default class Register extends Component {
                     placeholder='请输入您的联系方式' 
                     value={this.state.phone}
                     onChange={this.handleChange.bind(this, 'phone')}/>
-                <AtButton formType='submit'>提交</AtButton>
-                <AtButton formType='reset'>重置</AtButton>
+                </View>
+                
+                
                 </AtForm>
+                <View className='flexable-bg'></View>
+                <View className='bottom-part'>
+                    <View className='bottom-button'>
+                    <AtButton formType='submit' className={this.valid() ? 'submit-normal' : 'submit-disable'} disabled={!this.valid()} onClick={this.submitClick}>提交</AtButton>
+                    </View>
+                    <View className='bottom-button'>
+                    <AtButton formType='reset' onClick={this.resetClick}>重置</AtButton>
+                    </View>
+                </View>
             </View>
         )
     }

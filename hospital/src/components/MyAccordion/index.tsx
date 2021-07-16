@@ -2,7 +2,7 @@
 import { Component } from "@tarojs/taro";
 import { AtAccordion, AtList, AtListItem } from "taro-ui";
 
-// import 'taro-ui/dist/style/components/accordion.scss'
+// 
 import { Disease } from "../../common/DiseaseInterfaces";
 
 
