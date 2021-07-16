@@ -20,7 +20,13 @@ export default class Header extends Component<SimpleProp> {
             urls:[this.props.avatar]
         })
     }
+    onEditClick() {
+        Taro.navigateTo({
+            url: '/pages/editPage/editPage'
+        })
+    }
     render () {
+        console.log(this.props.avatar)
         return (
             <View className='back'>
                 <View className='left-part'>
@@ -32,7 +38,7 @@ export default class Header extends Component<SimpleProp> {
                         <Text className='age'>{this.props.age}</Text>
                     </View>
                 </View>
-                <View className='right-part'>
+                <View className='right-part' onClick={this.onEditClick}>
                     <Text className='edit'>编辑信息</Text>
                     <Image className='arrow' src={arrow}></Image>
                 </View>

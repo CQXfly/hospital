@@ -18,9 +18,14 @@
 
 .submit-normal {
     background-color: #00a573;
+    color: white;
 }
 .submit-disable {
     background-color: #6ca090;
+    color: rgb(238, 238, 238);
+}
+.reset {
+    color: #00a573;
 }
 .top-part {
     display: flex;

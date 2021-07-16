@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import { Header } from '../../components'
 import { AtGrid } from "taro-ui"
 
-import {PatientModel} from '../../common/NetInterface'
+import {UserPatientModel} from '../../common/NetInterface'
 import './index.scss'
 
 import info from '../../images/profile/profile_info.png'
@@ -11,11 +11,19 @@ import doctor from '../../images/profile/profile_doctor.png'
 import signin from '../../images/profile/profile_signin.png'
 import settings from '../../images/profile/profile_settings.png'
 
+interface MyProps {
+}
 
-
-export default class Mine extends Component<PatientModel> {
+interface MyState {
+    value: UserPatientModel
+    avatar: string
+}
+export default class Mine extends Component<MyProps, MyState> {
     config = {
         navigationBarTitleText: '我的'
+    }
+    constructor(props: MyProps) {
+        super(props)
     }
     selectItem(obj, index) {
         var page = ''
@@ -24,11 +32,13 @@ export default class Mine extends Component<PatientModel> {
                 page = '/pages/diseaseHistory/diseaseHistory'
                 break
             case 1:
+                page = '/pages/doctors/doctors'
                 break
             case 2:
                 page = '/pages/signin/signin'
                 break
             case 3:
+                page = '/pages/settings/settings'
                 break
         }
         Taro.navigateTo({
@@ -37,9 +47,10 @@ export default class Mine extends Component<PatientModel> {
         console.log(index, obj)
     }
     render() {
+        console.log(this.state.avatar)
         return (
             <View className='mine-back'>
-                <Header avatar={this.props.avatar} name={"test"} age={40}></Header>
+                <Header avatar={''} name={"test"} age={40}></Header>
                 <View className='mine-bottom'>
                     <AtGrid data={
                         [

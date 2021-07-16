@@ -2,12 +2,12 @@ import { View } from "@tarojs/components";
 import { Component } from "@tarojs/taro";
 import { AtForm, AtInput, AtCheckbox, AtButton } from "taro-ui";
 
-import './register.scss'
+import './editPage.scss'
 
 
-export default class Register extends Component {
+export default class EditPage extends Component {
     config = {
-        navigationBarTitleText: '注册'
+        navigationBarTitleText: '编辑信息'
     }
     state = {
         name: '',
@@ -63,19 +63,9 @@ export default class Register extends Component {
     }
 
     submitClick() {
-        Taro.switchTab({
-            url:'/pages/index/index'
+        Taro.navigateBack({
+            delta: 1
         })
-    }
-
-    resetClick() {
-        this.setState({
-            name: '',
-            age: '',
-            gender: 'male',
-            phone: ''
-        })
-        console.log(this.state)
     }
 
     valid() {
@@ -106,13 +96,6 @@ export default class Register extends Component {
                     value={this.state.age.toString()}
                     onChange={this.handleChange.bind(this, 'age')}/>
                 <AtCheckbox className='check-box-back' options={this.checkBoxOption} selectedList={[this.state.gender]} onChange={this.handleGender.bind(this)}/> 
-                {/* <AtInput
-                    name='phone' 
-                    title='联系方式' 
-                    type='phone' 
-                    placeholder='请输入您的联系方式' 
-                    value={this.state.phone}
-                    onChange={this.handleChange.bind(this, 'phone')}/> */}
                 <AtInput
                     name='address' 
                     title='联系地址' 
@@ -133,9 +116,6 @@ export default class Register extends Component {
                 <View className='bottom-part'>
                     <View className='bottom-button'>
                     <AtButton formType='submit' className={this.valid() ? 'submit-normal' : 'submit-disable'} disabled={!this.valid()} onClick={this.submitClick}>提交</AtButton>
-                    </View>
-                    <View className='bottom-button'>
-                    <AtButton className='reset' formType='reset' onClick={this.resetClick}>重置</AtButton>
                     </View>
                 </View>
             </View>

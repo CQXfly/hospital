@@ -35,7 +35,10 @@ class App extends Component {
       'pages/profile/index',
       'pages/detail/lessonDetail',
       'pages/signin/signin',
-      'pages/diseaseHistory/diseaseHistory'
+      'pages/diseaseHistory/diseaseHistory',
+      'pages/editPage/editPage',
+      'pages/doctors/doctors',
+      'pages/settings/settings',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -65,7 +68,6 @@ class App extends Component {
   // 请勿修改此函数
   render () {
     return (
-      // <Index />
       <Register/>
     )
   }
