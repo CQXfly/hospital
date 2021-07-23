@@ -20,8 +20,30 @@ export default class EditPage extends Component {
         { value: 'male', label: '男'},
         { value: 'female', label: '女'}
     ]
-    constructor () {
-        super(...arguments)
+    // constructor (props) {
+    //     super(props)
+    //     this.state = {
+    //         name: props.name,
+    //         age: props.age,
+    //         gender: props.gender == true ? 'male' : 'female',
+    //         contact: props.contact,
+    //         address: props.address
+    //     }
+    // }
+    componentWillMount() {
+        let name = this.$router.params.name
+        let age = this.$router.params.age
+        let gender = this.$router.params.gender
+        let contact = this.$router.params.contact
+        let address = this.$router.params.address
+        console.log(name, age, gender, contact, address)
+        this.state = {
+            name: name,
+            age: Number(age),
+            gender: Boolean(gender) == true ? 'male' : 'female',
+            contact: contact,
+            address: address
+        }
     }
 
     handleChange(content, input) {
@@ -47,29 +69,34 @@ export default class EditPage extends Component {
     }
 
     handleGender(value: Array<string>) {
-        let index = value.lastIndexOf(this.state.gender)
+        let cur = this.state.gender ? 'male' : 'female'
+        let index = value.lastIndexOf(cur)
         if ( index < 0) {
             return
         }
-        let gen = this.state.gender
-        var res = 'female'
-        if (gen == 'female') {
-            res = 'male'
-        }
-        console.log(res)
+        // let gen = this.state.gender
+        // var res = 'female'
+        // if (gen == 'female') {
+        //     res = 'male'
+        // }
+        // console.log(res)
+        // this.setState({
+        //     gender: res
+        // })
         this.setState({
-            gender: res
+            gender: !this.state.gender
         })
     }
 
     submitClick() {
+        console.log(this.state.name, this.state.age, this.state.address, this.state.contact, this.state.gender)
         Taro.navigateBack({
             delta: 1
         })
     }
 
     valid() {
-        console.log(this.state.name, this.state.age)
+        // console.log(this.state.name, this.state.age)
         return this.state.name.length > 0 && this.state.age >= 0
     }
 
@@ -95,7 +122,7 @@ export default class EditPage extends Component {
                     placeholder='请输入您的年龄' 
                     value={this.state.age.toString()}
                     onChange={this.handleChange.bind(this, 'age')}/>
-                <AtCheckbox className='check-box-back' options={this.checkBoxOption} selectedList={[this.state.gender]} onChange={this.handleGender.bind(this)}/> 
+                <AtCheckbox className='check-box-back' options={this.checkBoxOption} selectedList={this.state.gender ? ['male']:['female']} onChange={this.handleGender.bind(this)}/> 
                 <AtInput
                     name='address' 
                     title='联系地址' 
@@ -115,7 +142,7 @@ export default class EditPage extends Component {
                 <View className='flexable-bg'></View>
                 <View className='bottom-part'>
                     <View className='bottom-button'>
-                    <AtButton formType='submit' className={this.valid() ? 'submit-normal' : 'submit-disable'} disabled={!this.valid()} onClick={this.submitClick}>提交</AtButton>
+                    <AtButton formType='submit' className={this.valid() ? 'submit-normal' : 'submit-disable'} disabled={!this.valid()} onClick={this.submitClick.bind(this)}>提交</AtButton>
                     </View>
                 </View>
             </View>

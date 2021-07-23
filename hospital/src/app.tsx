@@ -1,7 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 // import Index from './pages/home/index'
 // import Index from './pages/index'
-import Register from './pages/register/register'
+// import Register from './pages/register/register'
+import Loading from './pages/loading/loading';
+// import { UserManager } from "../src/common/Server";
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -12,7 +14,16 @@ import './app.scss'
 
 class App extends Component {
 
-  componentDidMount () {}
+  componentDidMount () {
+    // console.log('开始获取opid')
+    //     UserManager.getInstance().geOpenId().then (value => {
+    //         console.log('success: ' + value)
+    //     }).catch(err => {
+    //         console.log('fail')
+    //     })
+  }
+
+
 
   componentDidShow () {}
 
@@ -30,6 +41,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/loading/loading',
       'pages/register/register',
       'pages/index/index',
       'pages/profile/index',
@@ -39,6 +51,7 @@ class App extends Component {
       'pages/editPage/editPage',
       'pages/doctors/doctors',
       'pages/settings/settings',
+      
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -68,7 +81,7 @@ class App extends Component {
   // 请勿修改此函数
   render () {
     return (
-      <Register/>
+      <Loading />
     )
   }
 }

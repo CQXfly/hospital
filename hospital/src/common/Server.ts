@@ -1,13 +1,14 @@
 import Taro from '@tarojs/taro'
-import {  GetLessonsRequestParams, GetClockInRecordDatesRequest, RecordClockInRequest, UserPatientModel, UserDoctorModel } from './NetInterface'
-import { LessonModel } from './HomeInterfaces'
+import {  UserLoginRequestParams, GetLessonsRequestParams, GetClockInRecordDatesRequest, RecordClockInRequest, UserPatientModel, UserDoctorModel, UserLoginResponse, UserRegisterResponse, UserPatientRequest} from './NetInterface'
+import { LessonModel, LessonDetailModel} from './HomeInterfaces'
 
 export enum RequestMethod {
     Get = "GET",
     Post = "POST"
 }
 
-const baseurl = "http://time-machine-firefox.cn:7001"
+// const baseurl = "http://time-machine-firefox.cn:7001"
+const baseurl = "https://time-machine-firefox.cn"
 
 interface RequestOptions {
     method: RequestMethod
@@ -21,6 +22,12 @@ interface ResponseOptions<T> {
     status: number
 }
 
+export const LoginRequest = async function loginRequest(params:UserLoginRequestParams) {
+    {
+        return await request<UserLoginResponse>({method: RequestMethod.Post, path:'/user/login', params})
+    }
+}
+
 export const GetLessonListRequest = async function getLessonListRequest(params: GetLessonsRequestParams) {
     {
         return await request<[LessonModel]>({method: RequestMethod.Get, path: '/lesson/list', params})
@@ -28,7 +35,7 @@ export const GetLessonListRequest = async function getLessonListRequest(params: 
 } 
 
 export const GetLessonDetailRequest = async function getLessonDetailRequest(params: {lessonId: string}) {
-    return await request<LessonModel>({method: RequestMethod.Get, path: '/lesson/detail', params})
+    return await request<LessonDetailModel>({method: RequestMethod.Get, path: '/lesson/detail', params})
 }
 
 export const GetClockRecordDatesRequest = async function getClockRecordDatesRequest(params: GetClockInRecordDatesRequest) {
@@ -41,8 +48,8 @@ export const RecordClockIn = async function recordClockIn(params:RecordClockInRe
     return request<{}>({params, method: RequestMethod.Post, path: '/clockin/update'})
 }
 
-export const PatientRegister = async function patientRegister(params:UserPatientModel) {
-    return request<{}>({params, method: RequestMethod.Post, path: '/user/register/patient'})
+export const PatientRegister = async function patientRegister(params:UserPatientRequest) {
+    return request<UserRegisterResponse>({params, method: RequestMethod.Post, path: '/user/register/patient'})
 }
 
 export const DoctorRegister = async function doctorRegister(params:UserDoctorModel) {
@@ -59,9 +66,11 @@ export const request = async function request<T>(options: RequestOptions){
             },
             header: {
                 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + UserManager.getInstance().getToken(),
             },
             method: options.method,
         }).then(res => {
+            console.log('response: ',res)
             let dd = res.data as unknown as ResponseOptions<T>
             if (dd.status != 200) {
                 reject(dd.message)
@@ -72,16 +81,26 @@ export const request = async function request<T>(options: RequestOptions){
     return p
 }
 
-
+// 
 export class UserManager {
     private static instance: UserManager;
-    private constructor() {  
+    private constructor() {
+        this.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3eGlkIjoiMTIzIiwiaWF0IjoxNjI2NTE0NjAyLCJleHAiOjE2MjY3NzM4MDJ9.b-0m4w8lbwEGK5aTSvwVDw1p1acAw6XHxFnN5WMUoI8'
     }
 
     private openId: string
+    private token: string
 
     public getWxId(): string {
         return this.openId
+    }
+
+    public getToken(): string {
+        return this.token
+    }
+
+    public updateToken(tok: string) {
+        this.token = tok
     }
   
     public static getInstance(): UserManager {

@@ -1,46 +1,68 @@
 // import { Component } from 'react'
 import { View, Text, Image, Video } from '@tarojs/components'
 import Taro, {Component, VideoContext} from '@tarojs/taro'
+import { GetLessonDetailRequest } from '../../common/Server'
+// import { LessonDetailModel } from "../../common/HomeInterfaces";
 import play from '../../images/detail/play.jpg'
 import './lessonDetail.scss' 
 
-interface LessonDetailProps {
+interface MyProps {
 }
 
 interface LessonDetailState {
-    imageurl: string
-    videourl: string
+    id: string
     title: string
+    imageUrl: string
+    videoUrl: string
+    videoDuration: number
+    updatedAt: string
     info: string
     showCoverImage: boolean
 }
 
-export default class LessonDetailPage extends Component<LessonDetailProps, LessonDetailState> {
+export default class LessonDetailPage extends Component<MyProps, LessonDetailState> {
     config = {
         navigationBarTitleText: '视频详情'
     }
-    constructor(props: LessonDetailProps){
+    
+    constructor(props: MyProps){
         super(props)
-
-        this.state = {
-            imageurl: "",
-            videourl: "",
-            title: "",
-            info: "",
-            showCoverImage: true
-        }
+        // this.state = {
+        //     value: undefined,
+        //     showCoverImage: true
+        // }
     }
     videoContext: VideoContext
-    componentDidMount() {
-        let value  = this.$router.params
-        console.log(value)
-        this.videoContext = Taro.createVideoContext('lessonVideo', this)
-        this.setState({
-            imageurl: value.imageurl,
-            videourl: value.videourl,
-            title: value.title,
-            info: value.info,
+    componentWillMount() {
+        let lid = this.$router.params.lessonID
+        console.log('request lessonid: ' + lid)
+        GetLessonDetailRequest({lessonId: lid}).then(res=>{
+            console.log('request result: ' + res)
+            this.setState({
+                id: res.id,
+                title: res.title,
+                imageUrl: res.imageUrl,
+                videoUrl: res.videoUrl,
+                videoDuration: res.videoDuration,
+                updatedAt: res.updatedAt,
+                info: res.info,
+                showCoverImage: true
+            })
+        }).catch(err=> {
+            console.log(err)
         })
+    }
+
+    componentDidMount() {
+        // let value  = this.$router.params
+        // console.log(value)
+        this.videoContext = Taro.createVideoContext('lessonVideo', this)
+        // this.setState({
+        //     imageurl: value.imageurl,
+        //     videourl: value.videourl,
+        //     title: value.title,
+        //     info: value.info,
+        // })
     }
 
     videoEnded() {
@@ -61,26 +83,35 @@ export default class LessonDetailPage extends Component<LessonDetailProps, Lesso
 
     render() {
         let showImage = this.state.showCoverImage
+        
         return (
             <View className='back'>
                 {/* {view} */}
                 <View className='video-back'>
                     <Image className={showImage ? 'play-show' : 'play-hide'} src={play} onClick={this.tapCoverImage} ></Image>
-                    <Image className={showImage ? 'background-icon-show' : 'background-icon-hide'} src={this.state.imageurl}></Image>
+                    <Image className={showImage ? 'background-icon-show' : 'background-icon-hide'} src={this.state.imageUrl}></Image>
                     <View className={showImage ? 'cover-show' : 'cover-hide'}></View>
                     <Video
                         className={!showImage ? 'background-icon-show' : 'background-icon-hide'}
                         onPlay={this.videoOnPlay} 
                         onEnded={this.videoEnded}
-                        src={this.state.videourl}
+                        src={this.state.videoUrl}
                         showCenterPlayBtn={false}
                         id='lessonVideo'>
                     </Video>
                 </View>
-                {/* <Text className='title'> {this.state.title} </Text>
-                <Text className='sub-title'> {this.state.info} </Text> */}
-                <Text className='title'> {'感冒'} </Text>
-                <Text className='sub-title'> {'感冒 （病症 \n 百姓所说的感冒是指“普通感冒”，又称“伤风”、急性鼻炎或上呼吸道感染。' + 
+                <Text className='title'> {this.state.title} </Text>
+                <Text className='sub-title'> {this.state.info} </Text>
+                {/* <Text className='title'> {'感冒'} </Text>
+                <Text className='sub-title'> {} </Text> */}
+            </View>
+        )
+    }
+}
+
+
+/*
+'感冒 （病症 \n 百姓所说的感冒是指“普通感冒”，又称“伤风”、急性鼻炎或上呼吸道感染。' + 
                 '感冒是一种常见的急性上呼吸道病毒性感染性疾病，多由鼻病毒、副流感病毒、呼吸道合胞病毒、埃可病毒、柯萨奇病毒、冠状病毒、腺病毒等引起。' + 
                 '临床表现为鼻塞、喷嚏、流涕、发热、咳嗽、头痛等，多呈自限性。大多散发，冬、春季节多发，季节交替时多发。' + 
                 '别称伤风、急性鼻炎或上呼吸道感染就诊科室呼吸内科常见病因多由鼻病毒、副流感病毒、呼吸道合胞病毒、埃可病毒、柯萨奇病毒、冠状病毒、腺病毒等引起。'+
@@ -99,9 +130,5 @@ export default class LessonDetailPage extends Component<LessonDetailProps, Lesso
                 ' 2.抗组胺药 \n  如马来酸氯苯那敏,对减少打喷嚏和鼻溢效果显著。 \n  3.镇咳药 \n  对于剧烈咳嗽，甚至影响休息时，可适量使用镇咳药，以右美沙芬的应用较多。 \n ' + 
                 ' 4.拟肾上腺素药 \n  对于鼻塞、鼻黏膜充血水肿的患者，可以使用盐酸伪麻黄碱等药物。 \n  并发症 \n  中耳炎、急性鼻窦炎、化脓性咽炎、气管-支气管炎、风湿热、肾小球肾炎和心肌炎等。 \n  预后 \n ' + 
                 '  本病具有自限性，从出现症状到痊愈，一般需要5～7天。 \n  护理 \n  1.多卧床休息，保证充足睡眠。 \n  2.清淡饮食，充分饮水，少吃油腻、煎炸、生冷的饮食。 \n  3.遵照医嘱,按时服药，不要滥用抗生素。 \n ' + 
-                ' 4.劳逸结合，循序渐进地进行适当的体育运动。 \n 5.在呼吸道疾病高发季节（初春、秋末冬初），少去人员密集的公共场所，防止交叉感染，保持良好的个人卫生习惯，勤洗手；保持环境清洁和通风。'} </Text>
-            </View>
-        )
-    }
-}
-
+                ' 4.劳逸结合，循序渐进地进行适当的体育运动。 \n 5.在呼吸道疾病高发季节（初春、秋末冬初），少去人员密集的公共场所，防止交叉感染，保持良好的个人卫生习惯，勤洗手；保持环境清洁和通风。'
+**/

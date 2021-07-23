@@ -12,6 +12,7 @@ interface SimpleProp {
     name: string
     age: number
     avatar: string
+    editClick: ()=>void
 }
 
 export default class Header extends Component<SimpleProp> {
@@ -20,11 +21,11 @@ export default class Header extends Component<SimpleProp> {
             urls:[this.props.avatar]
         })
     }
-    onEditClick() {
-        Taro.navigateTo({
-            url: '/pages/editPage/editPage'
-        })
-    }
+    // onEditClick() {
+        // Taro.navigateTo({
+        //     url: '/pages/editPage/editPage'
+        // })
+    // }
     render () {
         console.log(this.props.avatar)
         return (
@@ -35,10 +36,10 @@ export default class Header extends Component<SimpleProp> {
                     ) : (<AtAvatar size='large' circle text= {this.props.name} />)}
                     <View className='simple-info'>
                         <Text className='name'>{this.props.name}</Text>
-                        <Text className='age'>{this.props.age}</Text>
+                        <Text className='age'>{this.props.age + ' 岁'}</Text>
                     </View>
                 </View>
-                <View className='right-part' onClick={this.onEditClick}>
+                <View className='right-part' onClick={this.props.editClick}>
                     <Text className='edit'>编辑信息</Text>
                     <Image className='arrow' src={arrow}></Image>
                 </View>

@@ -23,12 +23,19 @@ export interface DoctorModel {
     review: boolean
 }
 
-export interface UserLoginResponse {
-    result: DoctorModel | PatientModel
-    type: number
-}
+
 
 export interface UserPatientModel {
+    wxid: string
+    age: number
+    name: string
+    address?: string
+    contact?: string
+    gender?: boolean
+    id: string
+}
+
+export interface UserPatientRequest {
     wxid: string
     age: number
     name: string
@@ -70,6 +77,11 @@ export interface RecordClockInResponse {
 export interface UserLoginResponse {
     userInfo: UserPatientModel | UserDoctorModel
     type: number
+    token: string
+}
+
+export interface UserRegisterResponse {
+    token: string
 }
 // "createdAt": "2021-07-08T09:31:20.000Z",
 // "updatedAt": "2021-07-08T09:31:20.000Z",

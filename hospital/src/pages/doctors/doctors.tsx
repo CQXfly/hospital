@@ -57,7 +57,7 @@ export default class Doctors extends Component<MyProps, MyState> {
         //   })
         let vals = this.state.values
         for (let index = 0; index < 5; index++) {
-            let name = "疾病名称"
+            let name = "医生"
             let age = index * 2 + 30
             let con = "13000000000"
             let rev = true

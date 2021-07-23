@@ -1,5 +1,6 @@
 import { View } from "@tarojs/components";
 import { Component } from "@tarojs/taro";
+import { LoginRequest, UserManager, PatientRegister } from '../../common/Server'
 import { AtForm, AtInput, AtCheckbox, AtButton } from "taro-ui";
 
 import './register.scss'
@@ -22,6 +23,11 @@ export default class Register extends Component {
     ]
     constructor () {
         super(...arguments)
+    }
+
+    componentWillMount() {
+        
+        
     }
 
     handleChange(content, input) {
@@ -63,9 +69,33 @@ export default class Register extends Component {
     }
 
     submitClick() {
-        Taro.switchTab({
-            url:'/pages/index/index'
-        })
+        let opid = UserManager.getInstance().getWxId()
+        let gen = this.state.gender == 'male' ? true : false
+        console.log('get gender'+ this.state)
+        PatientRegister(
+            {
+                wxid: opid, 
+                age: this.state.age, 
+                name: this.state.name, 
+                address: this.state.address, 
+                contact: this.state.contact, 
+                gender: gen
+            }).then(res => {
+                let token = res.token
+                console.log('regis: ' + token + res)
+                if (res == undefined) {
+                    Taro.navigateBack({
+                        delta: 1
+                    })
+                    return
+                }
+                UserManager.getInstance().updateToken(token)
+                Taro.switchTab({
+                    url:'/pages/index/index'
+                })
+            }).catch(err => {
+                console.log('regis err: ' + err)
+            })
     }
 
     resetClick() {
@@ -106,13 +136,6 @@ export default class Register extends Component {
                     value={this.state.age.toString()}
                     onChange={this.handleChange.bind(this, 'age')}/>
                 <AtCheckbox className='check-box-back' options={this.checkBoxOption} selectedList={[this.state.gender]} onChange={this.handleGender.bind(this)}/> 
-                {/* <AtInput
-                    name='phone' 
-                    title='联系方式' 
-                    type='phone' 
-                    placeholder='请输入您的联系方式' 
-                    value={this.state.phone}
-                    onChange={this.handleChange.bind(this, 'phone')}/> */}
                 <AtInput
                     name='address' 
                     title='联系地址' 
@@ -132,10 +155,10 @@ export default class Register extends Component {
                 <View className='flexable-bg'></View>
                 <View className='bottom-part'>
                     <View className='bottom-button'>
-                    <AtButton formType='submit' className={this.valid() ? 'submit-normal' : 'submit-disable'} disabled={!this.valid()} onClick={this.submitClick}>提交</AtButton>
+                    <AtButton formType='submit' className={this.valid() ? 'submit-normal' : 'submit-disable'} disabled={!this.valid()} onClick={this.submitClick.bind(this)}>提交</AtButton>
                     </View>
                     <View className='bottom-button'>
-                    <AtButton className='reset' formType='reset' onClick={this.resetClick}>重置</AtButton>
+                    <AtButton className='reset' formType='reset' onClick={this.resetClick.bind(this)}>重置</AtButton>
                     </View>
                 </View>
             </View>

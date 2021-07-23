@@ -80,9 +80,10 @@ export default class Index extends Component<MyProps, MyState> {
   }
 
   cardClick(lesson: LessonModel) {
-    console.log("what's card")
+    // console.log("what's card")
+    console.log('goto: ', lesson.id, lesson)
     Taro.navigateTo({
-      url: `/pages/detail/lessonDetail?title=${lesson.title}&info=${lesson.info}&imageurl=${lesson.imageUrl}&videourl=${lesson.videoUrl}`
+      url: `/pages/detail/lessonDetail?lessonID=${lesson.id}`
     })
   }
 
@@ -100,11 +101,12 @@ export default class Index extends Component<MyProps, MyState> {
            onRefresherRefresh={()=>{this.onRefreshPullDown()} }
            onScrollToLower={()=> {this.onRefreshPullUp()}}>
             {cards.map((card)=>{
+              console.log('lessonid ', card.id)
               return (
                 <View onClick={()=>{
                   that.cardClick(card)
                 }}>
-                  <HomeCardView title={card.title} image={card.imageUrl} update={card.updatedAt} />
+                  <HomeCardView title={card.title} image={card.imageUrl} update={card.updatedAt} lessonId={card.id} videoDuration={card.videoDuration}/>
                 </View>
               )
             })}
