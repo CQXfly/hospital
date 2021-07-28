@@ -1,9 +1,10 @@
-import { View, ScrollView } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 // import { CommonEvent } from "@tarojs/components/types/common";
 import { Component } from "@tarojs/taro";
-// import { AtAccordion, AtList, AtListItem } from "taro-ui";
-import { MyAccordion } from "../../components";
+import { AtFloatLayout, AtFab} from "taro-ui";
+import { MyAccordion, PostCard } from "../../components";
 
+import './diseaseHistory.scss'
 // import 'taro-ui/dist/style/components/accordion.scss'
 import { Disease } from "../../common/DiseaseInterfaces";
 
@@ -17,6 +18,8 @@ interface MyProps {
 interface MyState {
   values: Disease[]
   opens: boolean[]
+  isEdit: boolean
+  editDis?: Disease
 }
 
 class Temp implements Disease {
@@ -43,14 +46,18 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
     config = {
         navigationBarTitleText: '既往病史'
     }
+    
     constructor(props: MyProps) {
         super(props)
-
         this.state = {
             values: [],
-            opens: []
+            opens: [],
+            isEdit: false,
+            editDis: undefined
         }
     }
+    
+    
     componentWillMount () { 
         // for i in 0..
         this.requestData()
@@ -91,23 +98,42 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
     //     opens: list
     //   })
     // }
+    setIsEdit(isedit) {
+      // console.log(isedit)
+      this.setState({
+        isEdit: isedit
+      })
+    }
 
     render () {
         // let height = Taro.getSystemInfoSync().windowHeight
-        console.log(this.state.values)
+        // console.log(this.state.values)
         return (
           
-          this.state.values.map((dis)=>{
+          
+        <View>
+          {this.state.values.map((dis)=>{
             return (
-              <MyAccordion
-               name={dis.name} 
-               type={dis.type} 
-               date={dis.date} 
-               dep={dis.dep} 
-               hosptital={dis.hosptital} 
-               info={dis.info} />
-          )
-        })
+              <View>
+                <MyAccordion 
+                  name={dis.name} 
+                  type={dis.type} 
+                  date={dis.date} 
+                  dep={dis.dep} 
+                  hosptital={dis.hosptital} 
+                  info={dis.info} />
+              </View>   
+          )})}
+            <AtFloatLayout isOpened={this.state.isEdit} title='添加' onClose={() => this.setIsEdit(false)}>
+                  <PostCard name='' hospital='' info='' handleSubmit={() => this.setIsEdit(false)}/>
+                </AtFloatLayout>
+                <View className='post-button'>
+                  <AtFab onClick={() => this.setIsEdit(true)}>
+                    <Text className='at-fab__icon at-icon at-icon-edit'></Text>
+                  </AtFab>
+                </View>
+          </View>
       )
     }
 }
+

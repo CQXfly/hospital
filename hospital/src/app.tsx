@@ -3,6 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 // import Index from './pages/index'
 // import Register from './pages/register/register'
 import Loading from './pages/loading/loading';
+// import His from './pages/diseaseHistory/diseaseHistory';
 // import { UserManager } from "../src/common/Server";
 import './app.scss'
 
@@ -41,6 +42,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      // 'pages/diseaseHistory/diseaseHistory',
       'pages/loading/loading',
       'pages/register/register',
       'pages/index/index',
@@ -82,6 +84,7 @@ class App extends Component {
   render () {
     return (
       <Loading />
+      // <His />
     )
   }
 }

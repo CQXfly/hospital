@@ -1,11 +1,12 @@
 // import { Component } from 'react'
 import { View, Text, Image, Video } from '@tarojs/components'
 import Taro, {Component, VideoContext} from '@tarojs/taro'
-import { GetLessonDetailRequest } from '../../common/Server'
+import { GetLessonDetailRequest, RecordClockIn } from '../../common/Server'
 // import { LessonDetailModel } from "../../common/HomeInterfaces";
 import play from '../../images/detail/play.jpg'
+import {UserPatientModel} from '../../common/NetInterface'
 import './lessonDetail.scss' 
-
+let Keys = require('../../static/consts')
 interface MyProps {
 }
 
@@ -66,7 +67,32 @@ export default class LessonDetailPage extends Component<MyProps, LessonDetailSta
     }
 
     videoEnded() {
-        console.log('video end')
+        // console.log('video end')
+        
+        let date = new Date()
+        let year = date.getFullYear()
+        let month = date.getMonth()
+        let day = date.getDay()
+        let hour = date.getHours()
+        let sec = date.getSeconds()
+        let dateStr = year + '-' + month + '-' + day + ' ' + hour + ':' + sec
+        let dura = this.state.videoDuration
+        let leid = this.$router.params.lessonID
+        console.log('ended', dateStr, dura, leid)
+        Taro.getStorage({
+            key: Keys.storageKeys.patient,
+            success: function(res) {
+                let mo = res.data as unknown as UserPatientModel
+                RecordClockIn({uid: mo.id, date: dateStr, duration: dura, lessonid: leid}).then(res=>{
+                    console.log('res: ', res)
+                })
+                
+            }
+        })
+    //     uid: string,
+    // date: string, // yyyy-mm-dd hh:ss
+    // duration: number,
+    // lessonid: string
     }
 
     videoOnPlay() {

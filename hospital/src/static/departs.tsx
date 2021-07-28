@@ -133,29 +133,39 @@ var yijikeshi = [
     {"id": 9, "name": "体疗科"},
 ]
 
-var departs = {
-    1: {"内科": neike},
-    2: {"外科": waike},
-    3: {"妇科": fuke},
-    4: {"儿科": erke},
-    5: {"骨科": guke},
-    6: {"烧伤科": shaoshangke},
-    7: {"耳鼻喉科": erbihouke},
-    8: {"眼科": yanke},
-    9: {"口腔科": kouqiangke},
-    10: {"皮肤性病科": pifuxingbingke},
-    11: {"肿瘤科": zhongliuke},
-    12: {"男科": nanke},
-    13: {"传染科": chuanranke},
-    14: {"精神科": jingshenke},
-    15: {"康复医学科": kangfuyixueke},
-    16: {"介入医学科": jieruyixueke},
-    17: {"急诊科": jizhenke},
-    18: {"结核病科": jiehebingke},
-    19: {"运动医学科": yundongyixueke},
-    20: {"疼痛科": tengtongke},
-    21: {"营养科": yingyangke}
-}
+// var departs = {
+//     1: {"内科": neike},
+//     2: {"外科": waike},
+//     3: {"妇科": fuke},
+//     4: {"儿科": erke},
+//     5: {"骨科": guke},
+//     6: {"烧伤科": shaoshangke},
+//     7: {"耳鼻喉科": erbihouke},
+//     8: {"眼科": yanke},
+//     9: {"口腔科": kouqiangke},
+//     10: {"皮肤性病科": pifuxingbingke},
+//     11: {"肿瘤科": zhongliuke},
+//     12: {"男科": nanke},
+//     13: {"传染科": chuanranke},
+//     14: {"精神科": jingshenke},
+//     15: {"康复医学科": kangfuyixueke},
+//     16: {"介入医学科": jieruyixueke},
+//     17: {"急诊科": jizhenke},
+//     18: {"结核病科": jiehebingke},
+//     19: {"运动医学科": yundongyixueke},
+//     20: {"疼痛科": tengtongke},
+//     21: {"营养科": yingyangke}
+// }
+
+var departs = [
+        {"内科": neike}, {"外科": waike}, {"妇科": fuke}, 
+        {"儿科": erke}, {"骨科": guke}, {"烧伤科": shaoshangke}, 
+        {"耳鼻喉科": erbihouke}, {"眼科": yanke}, {"口腔科": kouqiangke}, 
+        {"皮肤性病科": pifuxingbingke}, {"肿瘤科": zhongliuke}, {"男科": nanke}, 
+        {"传染科": chuanranke}, {"精神科": jingshenke}, {"康复医学科": kangfuyixueke}, 
+        {"介入医学科": jieruyixueke}, {"急诊科": jizhenke}, {"结核病科": jiehebingke}, 
+        {"运动医学科": yundongyixueke}, {"疼痛科": tengtongke}, {"营养科": yingyangke}
+    ]
 
 module.exports = {
     dataList: departs

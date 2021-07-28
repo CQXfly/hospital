@@ -29,7 +29,7 @@ export default class MyAccordion extends Component<Disease> {
     }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <AtAccordion 
             open={this.state.open} 
