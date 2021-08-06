@@ -14,7 +14,7 @@ export default class HomeCardView extends Component<CardProps> {
     render () {
       
       let dura = convertSecondsToHoursMinutes(this.props.videoDuration)
-      console.log(this.props.videoDuration, dura)
+      // console.log(this.props.videoDuration, dura)
       return (
           <View className='cell'>
               <View className='content'>
