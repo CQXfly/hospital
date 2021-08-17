@@ -4,6 +4,9 @@ import { AtButton, AtImagePicker } from 'taro-ui'
 
 import './index.scss'
 import { Component } from '@tarojs/taro'
+import { DiseaseUpdateInfo, DiseaseUpdatePhotos } from '../../../src/common/NetInterface'
+import { DiseaseUploadInfo, DiseaseUploadPhotos, UserManager } from '../../../src/common/Server'
+import { UploadDiseasePhoto } from '../../../src/common/cosSave'
 let departs = require('../../static/departs')
 interface MyProps {
     handleSubmit: () => void
@@ -19,18 +22,22 @@ class ImgFile {
         this.url = url
     }
 }
-export default class PostCard extends Component<MyProps> {
 
-    state = {
-        // multiIndex: [0,0],
-        // multiArray: [['']],
-        firstColum: [''],
-        secondColumn: [''],
-        source: [['']],
-        type: '',
-        depart: '',
-        files:[]
-    }
+interface MyState {
+    firstColum: string[],
+    secondColumn: string[],
+    source: string[][],
+    type: string,
+    depart: string,
+    files: ImgFile[],
+    info: string
+    stage: string
+}
+export default class PostCard extends Component<MyProps, MyState> {
+
+    info: string = ""
+    stage: string = ""
+    type: string = ""
 
     constructor(props: MyProps) {
         super(props)
@@ -70,24 +77,57 @@ export default class PostCard extends Component<MyProps> {
             source: sour,
             type: '',
             depart: '',
-            files: []
+            files: [],
+            info: '',
+            stage: '',
         }
     }
 
     handleSubmit() {
+        debugger
+
+        let info: DiseaseUpdateInfo = {
+            type: this.type,
+            patientId: UserManager.getInstance().getUserID(),
+            info: this.info,
+            stage: this.stage
+        }
+
+        DiseaseUploadInfo(info).then(res =>{
+            let diseaseId = res.diseaseId
+            
+            if (this.state.files.length > 0) {
+                let promises = this.state.files.map(file => {
+                    return this.uploadPhotoWithCos(file.url, UserManager.getInstance().getWxId())
+                })
+    
+                Promise.all(promises).then(res => {
+                    DiseaseUploadPhotos({photos: res, diseaseId})
+                })
+            }
+
+            
+        })
+        
         this.props.handleSubmit()
     }
 
-    handleNameInput() {
-
+    async uploadPhotoWithCos(file, patientiId) {
+        let fileName = `disease_${new Date().getTime()}`
+        UploadDiseasePhoto(patientiId, file, fileName)
+        return `https://hospital-1253113581.cos.ap-shanghai.myqcloud.com/disease_photo/${patientiId}/${fileName}`
     }
 
-    handleHospitalInput() {
-
+    handleNameInput(val) {
+        this.type = val.detail.value
     }
 
-    handleInfoInput() {
+    handleHospitalInput(val) {
+        this.stage = val.detail.value
+    }
 
+    handleInfoInput(val) {
+        this.info = val.detail.value
     }
 
     onChange(e) {
@@ -117,9 +157,10 @@ export default class PostCard extends Component<MyProps> {
     }
 
     onImageChange(files) {
+        debugger
         this.setState({
             files
-          })
+        })
     }
 
     render() {
@@ -134,9 +175,9 @@ export default class PostCard extends Component<MyProps> {
                   value={this.props.name}
                   onInput={this.handleNameInput.bind(this)}
                 />
-                <View className='form-hint'>医院名称</View>
+                <View className='form-hint'>病理阶段</View>
                 <Input
-                  placeholder='点击输入医院'
+                  placeholder='点击输入病理阶段'
                   className='input-title'
                   value={this.props.hospital}
                   onInput={this.handleHospitalInput.bind(this)}
@@ -161,7 +202,7 @@ export default class PostCard extends Component<MyProps> {
                 <AtImagePicker 
                 files={this.state.files} 
                 onChange={this.onImageChange.bind(this)}/>
-                <AtButton formType='submit' type='primary'>提交</AtButton>
+                <AtButton formType='submit' type='primary' >提交</AtButton>
             </Form>
             
         </View>

@@ -1,10 +1,6 @@
 import Taro from '@tarojs/taro'
-<<<<<<< HEAD
-
-let COS = require('cos-wx-sdk-v5')
-=======
 import * as COS from 'cos-wx-sdk-v5'
->>>>>>> d9638a627fff71b7d2eefce775b1b004313302d7
+// let COS = require('cos-wx-sdk-v5')
 
 var getAuthorization = function (options, callback) {
     // 格式一、（推荐）后端通过获取临时密钥给到前端，前端计算签名    
@@ -44,45 +40,43 @@ export const search = function search() {
     })
 }
 
-export const createDir = function createDir(dir) {
+export const CreateDir = function createDir(userid) {
     // check dir
     let p = new Promise((res, rej) => {
         cos.putObject({
             Bucket: 'hospital-1253113581',
             Region: 'ap-shanghai',   /* 必须 */
-            Key: `${dir}/`,              /* 必须 */
+            Key: `/disease_photo/${userid}/`,              /* 必须 */
             Body: '',
          }, function(err, data) {
+             debugger
             if (err) {
                 rej(err)
                 return
             }
             res(data)
-            console.log(err)
-            console.log(data)
          });
     })
     return p
 }
 
-export const upload = function upload(filepath, fileName) {
+export const UploadDiseasePhoto = function uploadDiseasePhoto(userid, filepath, fileName) {
     let p = new Promise((res, rej) => {
         cos.postObject({
             Bucket: 'hospital-1253113581',
             Region: 'ap-shanghai',
-            Key: `lesson_photo/${fileName}`,
+            Key: `disease_photo/${userid}/${fileName}`,
             FilePath: filepath,
             onProgress: function (progressData) {
                 console.log(JSON.stringify(progressData))
             }
-        }, (err, data)=>{
+        }, (err)=>{
             if (err) {
                 rej(err)
                 return
             }
-            res(data)
-            console.log(err)
-            console.log(data)
+            let url = `https://hospital-1253113581.cos.ap-shanghai.myqcloud.com/disease_photo/${userid}/${fileName}`
+            res(url)
         })
     })
     return p

@@ -7,6 +7,7 @@ import { MyAccordion, PostCard } from "../../components";
 import './diseaseHistory.scss'
 // import 'taro-ui/dist/style/components/accordion.scss'
 import { Disease } from "../../common/DiseaseInterfaces";
+import { DiseaseHistoyrList, UserManager } from "../../../src/common/Server";
 
 // interface MyProps {
 //     dis: string
@@ -64,20 +65,19 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
     }
 
     requestData() {
-      let vals = this.state.values
-      var ops = this.state.opens
-      for (let index = 0; index < 5; index++) {
-        let name = "疾病名称"
-        let dep = "外科"
-        let type = "消化外科"
-        let date = '2020/01/01'
-        let hos = "上海协和医院"
-        let info = "疾病描述啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦"
-        let val = new Temp(dep, type, name, info, hos, date)
-        vals.push(val)
-        ops.push(false)
-      }
-      this.setState({values: vals, opens: ops})
+
+      let ops = this.state.opens
+      DiseaseHistoyrList({patientId: UserManager.getInstance().getUserID()}).then(res => {
+        let vals = res.map(ele => {
+          ops.push(false)
+          return new Temp("外科", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01') 
+        })
+        this.setState({
+          values: vals, 
+          opens: ops
+        })
+
+      })
     }
 
     // handleClick(index: number) {
@@ -109,8 +109,6 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
         // let height = Taro.getSystemInfoSync().windowHeight
         // console.log(this.state.values)
         return (
-          
-          
         <View>
           {this.state.values.map((dis)=>{
             return (

@@ -1,5 +1,6 @@
 import { View } from '@tarojs/components';
 import { Component } from '@tarojs/taro'
+import { CreateDir } from '../../common/cosSave';
 import { UserDoctorModel, UserPatientModel } from 'src/common/NetInterface';
 import { AtActivityIndicator } from "taro-ui";
 import { LoginRequest, UserManager } from '../../common/Server'
@@ -40,9 +41,13 @@ export default class Loading extends Component {
         LoginRequest({wxid: opid}).then(res=> {
             
             UserManager.getInstance().updateToken(res.token)
+
+            CreateDir(opid)
+
             if (res.type == 1) {
                 let mo = res.userInfo as UserPatientModel
                 console.log('loginrequest: ', mo)
+                UserManager.getInstance().updateUserId(mo.id)
                 Taro.setStorage({
                     key: Keys.storageKeys.patient,
                     data: mo,
@@ -51,6 +56,7 @@ export default class Loading extends Component {
                 
             }else{
                 let mo = res.userInfo as UserDoctorModel
+                UserManager.getInstance().updateUserId(mo.id)
                 Taro.setStorage({
                     key: Keys.storageKeys.doctor,
                     data: mo,

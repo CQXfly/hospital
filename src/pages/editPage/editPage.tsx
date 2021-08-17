@@ -78,15 +78,13 @@ export default class EditPage extends Component {
         if ( index < 0) {
             return
         }
-        debugger
         this.setState({
             gender: !this.state.gender
         })
     }
 
     submitClick() {
-        console.log(this.state.name, this.state.age, this.state.address, this.state.contact, this.state.gender)
-        debugger
+        
         PatientUpdateInfo({
             wxid: UserManager.getInstance().getWxId(),
             name: this.state.name,

@@ -6,6 +6,7 @@ import { GetLessonDetailRequest, RecordClockIn } from '../../common/Server'
 import play from '../../images/detail/play.jpg'
 import {UserPatientModel} from '../../common/NetInterface'
 import './lessonDetail.scss' 
+import moment from 'moment'
 let Keys = require('../../static/consts')
 interface MyProps {
 }
@@ -25,9 +26,11 @@ export default class LessonDetailPage extends Component<MyProps, LessonDetailSta
     config = {
         navigationBarTitleText: '视频详情'
     }
+    duration = 0
     
     constructor(props: MyProps){
         super(props)
+        this.duration = 0
         // this.state = {
         //     value: undefined,
         //     showCoverImage: true
@@ -68,22 +71,14 @@ export default class LessonDetailPage extends Component<MyProps, LessonDetailSta
 
     videoEnded() {
         // console.log('video end')
-        
-        let date = new Date()
-        let year = date.getFullYear()
-        let month = date.getMonth()
-        let day = date.getDay()
-        let hour = date.getHours()
-        let sec = date.getSeconds()
-        let dateStr = year + '-' + month + '-' + day + ' ' + hour + ':' + sec
-        let dura = this.state.videoDuration
+        let dateStr = moment().format('yyyy-MM-DD mm:ss')
+        let dura = new Date().valueOf() - this.duration
         let leid = this.$router.params.lessonID
-        console.log('ended', dateStr, dura, leid)
         Taro.getStorage({
             key: Keys.storageKeys.patient,
             success: function(res) {
                 let mo = res.data as unknown as UserPatientModel
-                RecordClockIn({uid: mo.id, date: dateStr, duration: dura, lessonid: leid}).then(res=>{
+                RecordClockIn({uid: mo.id, date: dateStr, duration: dura / 1000, lessonid: leid}).then(res=>{
                     console.log('res: ', res)
                 })
                 
@@ -97,6 +92,7 @@ export default class LessonDetailPage extends Component<MyProps, LessonDetailSta
 
     videoOnPlay() {
         console.log('video start')
+        this.duration = new Date().valueOf()
     }
 
     tapCoverImage = () => {

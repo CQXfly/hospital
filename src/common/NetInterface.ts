@@ -45,6 +45,7 @@ export interface UserPatientRequest {
 }
 
 export interface UserDoctorModel {
+    id: string,
     wxid: string
     name: string
     contact?: string
@@ -83,6 +84,30 @@ export interface UserLoginResponse {
 export interface UserRegisterResponse {
     token: string
 }
+
+
+export interface DiseaseUpdateInfo {
+    type: string
+    info: string
+    stage: string
+    patientId: string
+}
+
+export interface DiseaseUpdatePhotos {
+    photos: string[],
+    diseaseId: string
+}
+
+export interface DiseaseModel {
+    id: string 
+    doctorId: string
+    patient_id: string
+    type: string
+    info: string
+    stage: string
+    photos: string[]
+}
+
 // "createdAt": "2021-07-08T09:31:20.000Z",
 // "updatedAt": "2021-07-08T09:31:20.000Z",
 // "id": "9",

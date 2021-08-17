@@ -1,5 +1,18 @@
 import Taro from '@tarojs/taro'
-import {  UserLoginRequestParams, GetLessonsRequestParams, GetClockInRecordDatesRequest, RecordClockInRequest, UserPatientModel, UserDoctorModel, UserLoginResponse, UserRegisterResponse, UserPatientRequest} from './NetInterface'
+import {  
+    UserLoginRequestParams, 
+    GetLessonsRequestParams,
+    GetClockInRecordDatesRequest, 
+    RecordClockInRequest, 
+    UserPatientModel, 
+    UserDoctorModel, 
+    UserLoginResponse, 
+    UserRegisterResponse, 
+    UserPatientRequest, 
+    DiseaseUpdateInfo, 
+    DiseaseUpdatePhotos,
+    DiseaseModel
+} from './NetInterface'
 import { LessonModel, LessonDetailModel} from './HomeInterfaces'
 
 export enum RequestMethod {
@@ -60,6 +73,18 @@ export const DoctorRegister = async function doctorRegister(params:UserDoctorMod
     return request<{}>({params, method: RequestMethod.Post, path: '/user/register/patient'})
 }
 
+export const DiseaseUploadInfo = async function diseaseUpdateInfo(params: DiseaseUpdateInfo) {
+    return request<{diseaseId: string}>({params, method: RequestMethod.Post,  path: '/disease/updateInfo'})
+}
+
+export const DiseaseUploadPhotos = async function diseaseUpdatePhotos(params: DiseaseUpdatePhotos) {
+    return request<{}>({params, method: RequestMethod.Post,  path: '/disease/uploadPhoto'})
+}
+
+export const DiseaseHistoyrList= async function diseaseHistoyrList(params: {patientId: string}) {
+    return request<DiseaseModel[]>({params, method: RequestMethod.Get,  path: '/disease/getdiseases'})
+}
+
 export const request = async function request<T>(options: RequestOptions){
     let p = new Promise<T>((resolve, reject) => {
         Taro.request({
@@ -94,6 +119,8 @@ export class UserManager {
 
     private openId: string
     private token: string
+    private token: string
+    userId: string
 
     public getWxId(): string {
         return this.openId
@@ -101,6 +128,14 @@ export class UserManager {
 
     public getToken(): string {
         return this.token
+    }
+
+    public updateUserId(uid: string) {
+        this.userId = uid
+    }
+
+    public getUserID() {
+        return this.userId
     }
 
     public updateToken(tok: string) {
