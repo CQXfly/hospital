@@ -11,7 +11,8 @@ import {
     UserPatientRequest, 
     DiseaseUpdateInfo, 
     DiseaseUpdatePhotos,
-    DiseaseModel
+    DiseaseModel,
+    DoctorModel
 } from './NetInterface'
 import { LessonModel, LessonDetailModel} from './HomeInterfaces'
 
@@ -83,6 +84,10 @@ export const DiseaseUploadPhotos = async function diseaseUpdatePhotos(params: Di
 
 export const DiseaseHistoyrList= async function diseaseHistoyrList(params: {patientId: string}) {
     return request<DiseaseModel[]>({params, method: RequestMethod.Get,  path: '/disease/getdiseases'})
+}
+
+export const GETDoctorsList = async function getDoctorsList(params: {patientId: string}) {
+    return request<DoctorModel[]>({params, method: RequestMethod.Post,  path: '/user/patient/doctors'})
 }
 
 export const request = async function request<T>(options: RequestOptions){

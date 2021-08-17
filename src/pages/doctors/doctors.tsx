@@ -2,6 +2,7 @@ import { View, ScrollView } from "@tarojs/components";
 import { Component } from "@tarojs/taro";
 import { DoctorCardView } from '../../components'
 import { DoctorModel } from '../../common/NetInterface'
+import { GETDoctorsList, UserManager } from "../../../src/common/Server";
 
 interface MyProps {
 }
@@ -44,30 +45,18 @@ export default class Doctors extends Component<MyProps, MyState> {
     }
 
     componentWillMount () { 
+      debugger
         this.onRefreshPullDown()
     }
 
     onRefreshPullDown() {
-        // this.setState({loading: true})
+        this.setState({loading: true})
 
-        // GetLessonListRequest({page: 1}).then(res=>{
-        //     console.log(res)
-        //     this.pageIndex = 2
-        //     this.setState({values: res, loading: false})
-        //   })
-        let vals = this.state.values
-        for (let index = 0; index < 5; index++) {
-            let name = "医生"
-            let age = index * 2 + 30
-            let con = "13000000000"
-            let rev = true
-            let jobNum = index.toString()
-            let val = new Temp(name, age, rev, con, jobNum)
-            vals.push(val)
-        }
-        this.setState({
-            values: vals,
-            loading: false
+        GETDoctorsList({patientId: UserManager.getInstance().getUserID()}).then(doctors => {
+            this.setState({
+              values: doctors,
+              loading: false
+            })
         })
     }
 
