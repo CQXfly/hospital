@@ -49,7 +49,6 @@ export const CreateDir = function createDir(userid) {
             Key: `/disease_photo/${userid}/`,              /* 必须 */
             Body: '',
          }, function(err, data) {
-             debugger
             if (err) {
                 rej(err)
                 return

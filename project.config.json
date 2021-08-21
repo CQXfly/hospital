@@ -4,7 +4,7 @@
   "description": "mini program for longhua hospital&#39;s medical care.",
   "appid": "wx31327e7be6fcf2f0",
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": false,
     "enhance": false,
     "postcss": false,

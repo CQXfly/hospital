@@ -58,9 +58,12 @@ export default class Signin extends Component<MyProps, MyState> {
             let sign = new SignInDesc( year, month, modi)
             var signs = this.state.signs
             signs.unshift(sign)
-            this.setState({
-                signs: signs
-            })
+            setTimeout(() => {
+                this.setState({
+                    signs: signs
+                })
+            }, 1000);
+            
         }).catch(err=> {
             console.log(err)
         })
@@ -83,8 +86,9 @@ export default class Signin extends Component<MyProps, MyState> {
             })
         })
         
-        let test = [{value: '2021/07/10'}, {value: '2021/0715'}]
-        console.log('render: ', res, test)
+        console.log("---------> ", this.state.signs)
+        // let test = [{value: '2021/07/10'}, {value: '2021/0715'}]
+        // console.log('render: ', res, test)
         return (
             <AtCalendar marks={res} onMonthChange={this.monthChange.bind(this)}/>
         )

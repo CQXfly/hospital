@@ -84,7 +84,6 @@ export default class PostCard extends Component<MyProps, MyState> {
     }
 
     handleSubmit() {
-        debugger
 
         let info: DiseaseUpdateInfo = {
             type: this.type,
@@ -105,8 +104,6 @@ export default class PostCard extends Component<MyProps, MyState> {
                     DiseaseUploadPhotos({photos: res, diseaseId})
                 })
             }
-
-            
         })
         
         this.props.handleSubmit()
@@ -157,7 +154,6 @@ export default class PostCard extends Component<MyProps, MyState> {
     }
 
     onImageChange(files) {
-        debugger
         this.setState({
             files
         })
