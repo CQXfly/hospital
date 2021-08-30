@@ -5,4 +5,5 @@ export interface Disease {
     info: string
     hosptital: string
     date: string
+    photos: string[]
 }

@@ -68,7 +68,7 @@ export default class PostCard extends Component<MyProps, MyState> {
             sour.push(temp)
             index += 1
         })
-        console.log('res: ',sour, a.length, sour.length)
+        // console.log('res: ',sour, a.length, sour.length)
         this.state = {
             // multiIndex: [0,0],
             // multiArray: [leftColum, fir],

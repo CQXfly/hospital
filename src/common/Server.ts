@@ -124,7 +124,7 @@ export class UserManager {
 
     private openId: string
     private token: string
-    private token: string
+    // private token: string
     userId: string
 
     public getWxId(): string {

@@ -30,14 +30,16 @@ class Temp implements Disease {
   info: string;
   hosptital: string;
   date: string;
+  photos: string[];
 
-  constructor(dp: string, type: string, name: string, info: string, hosp: string, date: string) {
+  constructor(dp: string, type: string, name: string, info: string, hosp: string, date: string, photos: string[]) {
     this.dep = dp
     this.type = type
     this.name = name
     this.info = info
     this.hosptital = hosp
     this.date = date
+    this.photos = photos
   }
   
 }
@@ -70,7 +72,9 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
       DiseaseHistoyrList({patientId: UserManager.getInstance().getUserID()}).then(res => {
         let vals = res.map(ele => {
           ops.push(false)
-          return new Temp("外科", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01') 
+          console.log('response', ele)
+          return new Temp("外科", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
+          // return new Temp()
         })
         this.setState({
           values: vals, 
@@ -107,7 +111,7 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
 
     render () {
         // let height = Taro.getSystemInfoSync().windowHeight
-        // console.log(this.state.values)
+        // console.log('response:', this.state.values)
         return (
         <View>
           {this.state.values.map((dis)=>{
@@ -119,7 +123,8 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
                   date={dis.date} 
                   dep={dis.dep} 
                   hosptital={dis.hosptital} 
-                  info={dis.info} />
+                  info={dis.info} 
+                  photos={dis.photos}/>
               </View>   
           )})}
             <AtFloatLayout isOpened={this.state.isEdit} title='添加' onClose={() => this.setIsEdit(false)}>

@@ -30,8 +30,17 @@ export default class MyAccordion extends Component<Disease> {
         this.setState({open: value})
     }
 
+    previewImage(e) {
+        let current = e.target.dataset.url
+        console.log('previewimage', current)
+        Taro.previewImage({
+            current: current,
+            urls: this.props.photos
+        })
+    }
+
     render() {
-        // console.log(this.props)
+        // console.log('let me see', this.props.photos)
         return (
             <AtAccordion 
             open={this.state.open} 
@@ -46,13 +55,14 @@ export default class MyAccordion extends Component<Disease> {
                     <Text className='subInfo'>{this.props.type}</Text>
                 </View>
                 <View className='description'>{this.props.info}</View>
-                <View className='photoArea'>
-                    <Image className='icon' src='https://staticweb.keepcdn.com/staticShow/images/appintro/app_pic_t2_class16-914ffa6fb1.png' mode={"aspectFill"}></Image>
-                    <Image className='icon' src='https://staticweb.keepcdn.com/staticShow/images/appintro/app_pic_t2_class16-914ffa6fb1.png' mode={"aspectFill"}></Image>
-                    <Image className='icon' src='https://staticweb.keepcdn.com/staticShow/images/appintro/app_pic_t2_class16-914ffa6fb1.png' mode={"aspectFill"}></Image>
+                <View className='photoArea'>{this.props.photos.map((photo) => {
+                    return (
+                    <Image className='icon' src={photo} mode={"aspectFill"} onClick={this.previewImage}/>)
+                })}
                 </View>
               </AtList>
             </AtAccordion>
         )
     }
 }
+

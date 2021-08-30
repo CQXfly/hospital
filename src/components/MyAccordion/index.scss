@@ -1,0 +1,49 @@
+.photoArea {
+    display: flex;
+    // padding: 30px;
+    // padding: 4vw;
+    width: 100vw;
+    height: 28vw;
+    // flex-grow: 1;
+    // flex-shrink: 1;
+    // flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    // align-items: center;
+    // align-content: space-between;
+    // background-color: red;
+
+    .icon {
+        // width: 210px;
+        // height: 210px;
+        margin-left: 4vw;
+        width: 28vw;
+        height: 28vw;
+    }
+
+}
+
+.subInfoBack{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.subInfo{
+    font-size: 28px;
+    color: gray;
+}
+
+.description{
+    font-size: 32px;
+    color: gray;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.subTitle{
+    font-size: 36px;
+    color: gray;
+    padding-left: 30px;
+    // padding: 40px;
+}

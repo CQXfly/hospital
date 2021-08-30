@@ -50,6 +50,7 @@
     "moment": "^2.29.1",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
+    "node-sass": "^6.0.1",
     "redux": "^4.1.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
