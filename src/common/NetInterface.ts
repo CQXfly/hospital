@@ -108,14 +108,31 @@ export interface DiseaseModel {
     photos: string[]
 }
 
-// "createdAt": "2021-07-08T09:31:20.000Z",
-// "updatedAt": "2021-07-08T09:31:20.000Z",
-// "id": "9",
-// "gender": 1,
-// "name": "王二狗",
-// "contact": "110",
-// "address": "address",
-// "age": 22,
-// "doctor_id": null,
-// "wxID": "245",
-// "type": 1
+export interface PatientInfoRequest {
+    doctorId: string,
+    patientId: string
+}
+
+export interface PatientInfoResponse {
+    createdAt: string,
+    updatedAt: string,
+    id: string,
+    gender: boolean,
+    name: string,
+    contact?: string,
+    address?: string,
+    age: number,
+    doctor_id: number,
+    wxID: string
+}
+
+// "": "2021-06-17T02:35:48.000Z",
+//         "": "2021-08-17T02:41:01.000Z",
+//         "id": "8",
+//         "gender": 1,
+//         "name": "patient",
+//         "contact": null,
+//         "address": null,
+//         "age": 13,
+//         "doctor_id": 8,
+//         "wxID": "123"

@@ -73,7 +73,7 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
         let vals = res.map(ele => {
           ops.push(false)
           console.log('response', ele)
-          return new Temp("外科", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
+          return new Temp("undefined", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
           // return new Temp()
         })
         this.setState({

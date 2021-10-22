@@ -70,7 +70,7 @@ export default class Doctors extends Component<MyProps, MyState> {
         // })
 
         Taro.showLoading({
-          "title": "123",
+          "title": "loading",
           "mask": false,
           "success": () => {
             console.log('success')

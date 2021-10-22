@@ -41,9 +41,8 @@ export default class Loading extends Component {
         LoginRequest({wxid: opid}).then(res=> {
             
             UserManager.getInstance().updateToken(res.token)
-
             CreateDir(opid)
-
+            console.log('let me',res)
             if (res.type == 1) {
                 let mo = res.userInfo as UserPatientModel
                 console.log('loginrequest: ', mo)
@@ -51,7 +50,7 @@ export default class Loading extends Component {
                 Taro.setStorage({
                     key: Keys.storageKeys.patient,
                     data: mo,
-                    success: this.goToIndex
+                    success: this.goToIndex //  this.goToIndex
                 })
                 
             }else{
@@ -60,7 +59,7 @@ export default class Loading extends Component {
                 Taro.setStorage({
                     key: Keys.storageKeys.doctor,
                     data: mo,
-                    success: this.goToIndex
+                    success: this.goToDoctor
                 })
             }
         }).catch(err => {
@@ -74,6 +73,12 @@ export default class Loading extends Component {
     goToIndex() {
         Taro.switchTab({
             url: '/pages/index/index'
+        })
+    }
+
+    goToDoctor() {
+        Taro.reLaunch({
+            url: '/pages/doctorHome/doctorHome'
         })
     }
 
