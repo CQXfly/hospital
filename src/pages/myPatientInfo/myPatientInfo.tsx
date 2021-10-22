@@ -1,33 +1,14 @@
 import { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { PatientInfoResponse } from '../../common/NetInterface'
-import { PatientCardView, MyAccordion } from '../../components'
+import { MyAccordion } from '../../components'
 import { DiseaseHistoyrList } from '../../common/Server'
-import { Disease } from '../../common/DiseaseInterfaces'
+import { Disease, DiseaseModel } from '../../common/DiseaseInterfaces'
 import { AtDivider } from 'taro-ui'
 import './myPatientInfo.scss'
 
-class Temp implements Disease {
-    dep: string;
-    type: string;
-    name: string;
-    info: string;
-    hosptital: string;
-    date: string;
-    photos: string[];
-
-    constructor(dp: string, type: string, name: string, info: string, hosp: string, date: string, photos: string[]) {
-        this.dep = dp
-        this.type = type
-        this.name = name
-        this.info = info
-        this.hosptital = hosp
-        this.date = date
-        this.photos = photos
-    }
-}
-
 interface MyProps {
+
 }
 
 interface MyState {
@@ -43,16 +24,6 @@ interface MyState {
 
 export default class MyPatientInfo extends Component<MyProps, MyState> {
 
-    // state = {
-    //     name: '',
-    //     age: 0, 
-    //     address: '',
-    //     contact: '',
-    //     gender: true,
-    //     id: '',
-    //     values: [],
-    //     opens: []
-    // }
     config = {
         navigationBarTitleText: '患者信息'
     }
@@ -68,7 +39,6 @@ export default class MyPatientInfo extends Component<MyProps, MyState> {
             values: [],
             opens: []
         }
-        // console.log('constructor', this.state)
     }
 
     componentWillMount() {
@@ -79,8 +49,7 @@ export default class MyPatientInfo extends Component<MyProps, MyState> {
         DiseaseHistoyrList({patientId: dic.id}).then(res => {
             ops.push(false)
             let vals = res.map(ele => {
-                // console.log('response', ele)
-                return new Temp("undefined", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
+                return new DiseaseModel("undefined", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
             })
             this.setState({
                 name: dic.name,
@@ -93,11 +62,6 @@ export default class MyPatientInfo extends Component<MyProps, MyState> {
                 opens: ops
             })
         })
-        
-        // this.setState({
-        //   values: vals, 
-        //   opens: ops
-        // })
     }
 
     goToSignIn() {

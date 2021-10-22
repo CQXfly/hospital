@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components";
 import { Component } from "@tarojs/taro";
-import { LoginRequest, UserManager, PatientRegister, DoctorRegister } from '../../common/Server'
+import { UserManager, PatientRegister, DoctorRegister } from '../../common/Server'
 import { AtForm, AtInput, AtCheckbox, AtButton } from "taro-ui";
 
 import './register.scss'
@@ -29,11 +29,6 @@ export default class Register extends Component {
     ]
     constructor () {
         super(...arguments)
-    }
-
-    componentWillMount() {
-        
-        
     }
 
     handleChange(content, input) {

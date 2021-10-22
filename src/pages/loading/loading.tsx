@@ -8,17 +8,6 @@ import './loading.scss'
 
 let Keys = require('../../static/consts')
 export default class Loading extends Component {
-    // fetchUserInfo() {
-        // let opid = UserManager.getInstance().getWxId()
-        // console.log('lookres   ' + opid)
-        // if (opid == undefined) {
-        //     Taro.navigateTo({
-        //         url: '/pages/register/register'
-        //     })
-        // }else{
-
-        // }
-    // }
     state = {
         title: ''
     }
@@ -91,13 +80,6 @@ export default class Loading extends Component {
             console.log('fail')
         })
         
-
-
-        // GetLessonListRequest({page: 1}).then(res=>{
-        //     console.log(res)
-        //     this.pageIndex = 2
-        //     this.setState({values: res, loading: false})
-        //   })
     }
     render() {
         return (
