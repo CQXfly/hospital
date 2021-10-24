@@ -6,7 +6,7 @@ import { MyAccordion, PostCard } from "../../components";
 
 import './diseaseHistory.scss'
 // import 'taro-ui/dist/style/components/accordion.scss'
-import { Disease } from "../../common/DiseaseInterfaces";
+import { Disease, DiseaseModel } from "../../common/DiseaseInterfaces";
 import { DiseaseHistoyrList, UserManager } from "../../../src/common/Server";
 
 // interface MyProps {
@@ -23,28 +23,6 @@ interface MyState {
   editDis?: Disease
 }
 
-class Temp implements Disease {
-  dep: string;
-  type: string;
-  name: string;
-  info: string;
-  hosptital: string;
-  date: string;
-  photos: string[];
-
-  constructor(dp: string, type: string, name: string, info: string, hosp: string, date: string, photos: string[]) {
-    this.dep = dp
-    this.type = type
-    this.name = name
-    this.info = info
-    this.hosptital = hosp
-    this.date = date
-    this.photos = photos
-  }
-  
-}
-
-// var deps = require("../../static/departs.tsx")
 export default class DiseaseHistory extends Component<MyProps, MyState> {
     config = {
         navigationBarTitleText: '既往病史'
@@ -73,7 +51,7 @@ export default class DiseaseHistory extends Component<MyProps, MyState> {
         let vals = res.map(ele => {
           ops.push(false)
           console.log('response', ele)
-          return new Temp("外科", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
+          return new DiseaseModel("undefined", ele.type, "疾病名称", ele.info, ele.stage, '2020/01/01', ele.photos) 
           // return new Temp()
         })
         this.setState({

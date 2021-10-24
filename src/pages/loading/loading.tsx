@@ -8,17 +8,6 @@ import './loading.scss'
 
 let Keys = require('../../static/consts')
 export default class Loading extends Component {
-    // fetchUserInfo() {
-        // let opid = UserManager.getInstance().getWxId()
-        // console.log('lookres   ' + opid)
-        // if (opid == undefined) {
-        //     Taro.navigateTo({
-        //         url: '/pages/register/register'
-        //     })
-        // }else{
-
-        // }
-    // }
     state = {
         title: ''
     }
@@ -41,9 +30,8 @@ export default class Loading extends Component {
         LoginRequest({wxid: opid}).then(res=> {
             
             UserManager.getInstance().updateToken(res.token)
-
             CreateDir(opid)
-
+            console.log('let me',res)
             if (res.type == 1) {
                 let mo = res.userInfo as UserPatientModel
                 console.log('loginrequest: ', mo)
@@ -51,7 +39,7 @@ export default class Loading extends Component {
                 Taro.setStorage({
                     key: Keys.storageKeys.patient,
                     data: mo,
-                    success: this.goToIndex
+                    success: this.goToIndex //  this.goToIndex
                 })
                 
             }else{
@@ -60,7 +48,7 @@ export default class Loading extends Component {
                 Taro.setStorage({
                     key: Keys.storageKeys.doctor,
                     data: mo,
-                    success: this.goToIndex
+                    success: this.goToDoctor
                 })
             }
         }).catch(err => {
@@ -77,6 +65,12 @@ export default class Loading extends Component {
         })
     }
 
+    goToDoctor() {
+        Taro.reLaunch({
+            url: '/pages/doctorHome/doctorHome'
+        })
+    }
+
     componentDidMount () {
         console.log('开始获取opid')
         UserManager.getInstance().geOpenId().then (value => {
@@ -86,13 +80,6 @@ export default class Loading extends Component {
             console.log('fail')
         })
         
-
-
-        // GetLessonListRequest({page: 1}).then(res=>{
-        //     console.log(res)
-        //     this.pageIndex = 2
-        //     this.setState({values: res, loading: false})
-        //   })
     }
     render() {
         return (

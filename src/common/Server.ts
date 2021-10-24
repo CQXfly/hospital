@@ -12,7 +12,10 @@ import {
     DiseaseUpdateInfo, 
     DiseaseUpdatePhotos,
     DiseaseModel,
-    DoctorModel
+    DoctorModel,
+    PatientInfoRequest,
+    PatientModel,
+    PatientInfoResponse
 } from './NetInterface'
 import { LessonModel, LessonDetailModel} from './HomeInterfaces'
 
@@ -70,8 +73,8 @@ export const PatientUpdateInfo = async function patientUpdateInfo(params:UserPat
     return request<UserPatientModel>({params, method: RequestMethod.Post, path: '/user/update/patient'})
 }
 
-export const DoctorRegister = async function doctorRegister(params:UserDoctorModel) {
-    return request<{}>({params, method: RequestMethod.Post, path: '/user/register/patient'})
+export const DoctorRegister = async function doctorRegister(params:UserPatientRequest) {
+    return request<UserRegisterResponse>({params, method: RequestMethod.Post, path: '/user/register/doctor'})
 }
 
 export const DiseaseUploadInfo = async function diseaseUpdateInfo(params: DiseaseUpdateInfo) {
@@ -88,6 +91,14 @@ export const DiseaseHistoyrList= async function diseaseHistoyrList(params: {pati
 
 export const GETDoctorsList = async function getDoctorsList(params: {patientId: string}) {
     return request<DoctorModel[]>({params, method: RequestMethod.Post,  path: '/user/patient/doctors'})
+}
+
+export const PatientList = async function getPatientList(params: {doctorId: string}) {
+    return request<PatientInfoResponse[]>({params, method: RequestMethod.Post,  path: '/user/doctor/patients'})
+}
+
+export const PatientInfo = async function getPatientInfo(params: PatientInfoRequest) {
+    return request<PatientInfoResponse>({params, method: RequestMethod.Get, path: '/user/doctor/patient/DetailInfo'})
 }
 
 export const request = async function request<T>(options: RequestOptions){

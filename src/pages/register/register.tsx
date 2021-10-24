@@ -1,6 +1,6 @@
 import { View } from "@tarojs/components";
 import { Component } from "@tarojs/taro";
-import { LoginRequest, UserManager, PatientRegister } from '../../common/Server'
+import { UserManager, PatientRegister, DoctorRegister } from '../../common/Server'
 import { AtForm, AtInput, AtCheckbox, AtButton } from "taro-ui";
 
 import './register.scss'
@@ -15,23 +15,24 @@ export default class Register extends Component {
         age: 0,
         gender: 'male',
         contact: '',
-        address: ''
+        address: '',
+        isDoctor: false
     }
     checkBoxOption = [
         { value: 'male', label: '男'},
         { value: 'female', label: '女'}
     ]
+
+    checkIfDoctor = [
+        { value: false, label: '我是患者'},
+        { value: true, label: '我是医生'}
+    ]
     constructor () {
         super(...arguments)
     }
 
-    componentWillMount() {
-        
-        
-    }
-
     handleChange(content, input) {
-        console.log(content, input, this.state.name)
+        // console.log(content, input, this.state.name)
         if (content == 'name') {
             this.setState({
                 name: input
@@ -62,16 +63,37 @@ export default class Register extends Component {
         if (gen == 'female') {
             res = 'male'
         }
-        console.log(res)
+        // console.log(res)
         this.setState({
             gender: res
         })
     }
 
+    handleIsDoctor(value: Array<boolean>) {
+        let isDoc = this.state.isDoctor
+        var res = true
+        if (isDoc) {
+            res = false
+        }
+        // console.log(res)
+        this.setState({
+            isDoctor: res
+        })
+    }
+
     submitClick() {
+        
+        if (this.state.isDoctor) {
+            this.registDoctor()
+        }else{
+            this.registPatient()
+        }
+    }
+
+    registPatient() {
         let opid = UserManager.getInstance().getWxId()
         let gen = this.state.gender == 'male' ? true : false
-        console.log('get gender'+ this.state)
+        // console.log('get gender'+ this.state)
         PatientRegister(
             {
                 wxid: opid, 
@@ -98,6 +120,32 @@ export default class Register extends Component {
             })
     }
 
+    registDoctor() {
+        let opid = UserManager.getInstance().getWxId()
+        let gen = this.state.gender == 'male' ? true : false
+        DoctorRegister({
+            wxid: opid, 
+            age: this.state.age, 
+            name: this.state.name, 
+            address: this.state.address, 
+            contact: this.state.contact, 
+            gender: gen
+        }).then(res => {
+            let token = res.token
+                console.log('regis: ' + token + res)
+                if (res == undefined) {
+                    Taro.navigateBack({
+                        delta: 1
+                    })
+                    return
+                }
+                UserManager.getInstance().updateToken(token)
+                Taro.reLaunch({
+                    url: '/pages/doctorHome/doctorHome'
+                })
+        })
+    }
+
     resetClick() {
         this.setState({
             name: '',
@@ -105,11 +153,11 @@ export default class Register extends Component {
             gender: 'male',
             phone: ''
         })
-        console.log(this.state)
+        // console.log(this.state)
     }
 
     valid() {
-        console.log(this.state.name, this.state.age)
+        // console.log(this.state.name, this.state.age)
         return this.state.name.length > 0 && this.state.age >= 0
     }
 
@@ -150,6 +198,7 @@ export default class Register extends Component {
                     placeholder='请输入您的联系方式' 
                     value={this.state.contact}
                     onChange={this.handleChange.bind(this, 'contact')}/>
+                <AtCheckbox className='check-box-back' options={this.checkIfDoctor} selectedList={[this.state.isDoctor]} onChange={this.handleIsDoctor.bind(this)}/> 
                 </View>
                 </AtForm>
                 <View className='flexable-bg'></View>

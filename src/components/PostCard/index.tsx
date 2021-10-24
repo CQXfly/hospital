@@ -3,7 +3,7 @@ import {View, Form, Input, Textarea, Picker } from '@tarojs/components'
 import { AtButton, AtImagePicker } from 'taro-ui'
 
 import './index.scss'
-import { Component } from '@tarojs/taro'
+import { Component } from '@tarojs/taro';
 import { DiseaseUpdateInfo, DiseaseUpdatePhotos } from '../../../src/common/NetInterface'
 import { DiseaseUploadInfo, DiseaseUploadPhotos, UserManager } from '../../../src/common/Server'
 import { UploadDiseasePhoto } from '../../../src/common/cosSave'
@@ -99,7 +99,6 @@ export default class PostCard extends Component<MyProps, MyState> {
                 let promises = this.state.files.map(file => {
                     return this.uploadPhotoWithCos(file.url, UserManager.getInstance().getWxId())
                 })
-    
                 Promise.all(promises).then(res => {
                     DiseaseUploadPhotos({photos: res, diseaseId})
                 })
@@ -154,6 +153,7 @@ export default class PostCard extends Component<MyProps, MyState> {
     }
 
     onImageChange(files) {
+        
         this.setState({
             files
         })

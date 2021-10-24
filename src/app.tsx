@@ -53,6 +53,8 @@ class App extends Component {
       'pages/editPage/editPage',
       'pages/doctors/doctors',
       'pages/settings/settings',
+      'pages/doctorHome/doctorHome',
+      'pages/myPatientInfo/myPatientInfo'
       
     ],
     window: {

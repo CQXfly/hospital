@@ -1,0 +1,22 @@
+.info-part {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.info {
+    padding-top: 30px;
+}
+
+.goToRecord {
+    padding-top: 30px;
+    color: #00a573;
+}
+
+.diseaseTitle {
+    display: flex;
+    padding-top: 30px;
+    padding-left: 20px;
+}

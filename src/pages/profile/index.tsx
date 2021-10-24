@@ -10,15 +10,8 @@ import info from '../../images/profile/profile_info.png'
 import doctor from '../../images/profile/profile_doctor.png'
 import signin from '../../images/profile/profile_signin.png'
 import settings from '../../images/profile/profile_settings.png'
-
-// interface MyProps {
-// }
-
-// interface MyState {
-//     value: UserPatientModel
-//     avatar: string
-// }
 let Keys = require('../../static/consts')
+
 export default class Mine extends Component {
     config = {
         navigationBarTitleText: '我的'
@@ -89,7 +82,6 @@ export default class Mine extends Component {
         console.log(index, obj)
     }
     goToEdit() {
-        // console.log('go to edit page', this.state.name)
         Taro.navigateTo({
             url: `/pages/editPage/editPage?name=${this.state.name}&age=${this.state.age}&address=${this.state.address}&contact=${this.state.contact}&gender=${this.state.gender}`
         })
