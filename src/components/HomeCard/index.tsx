@@ -13,7 +13,6 @@ export default class HomeCardView extends Component<CardProps> {
   //   console.log(dura)
   // }
     render () {
-      
       let dura = convertSecondsToHoursMinutes(this.props.videoDuration)
       // console.log(this.props.videoDuration, dura)
       return (
@@ -25,7 +24,7 @@ export default class HomeCardView extends Component<CardProps> {
                       <Text className='sub-title'>  时长  </Text>
                       <Text className='sub-title'>{dura}</Text>
                   </View>
-                <Image className='background-icon' src='https://hospital-1253113581.cos.ap-shanghai.myqcloud.com/disease_photo/oorJj5TL7RadimTnsbbt85n0-BTU/disease_1629190318122' mode={'aspectFill'}/>
+                <Image className='background-icon' src={this.props.image} mode={'aspectFill'}/>
                 <View className='cover' />
               </View>
           </View>

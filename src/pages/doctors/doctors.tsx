@@ -57,25 +57,6 @@ export default class Doctors extends Component<MyProps, MyState> {
               loading: false
             })
         })
-
-        // Taro.showActionSheet({
-        //   itemList: ['1', '2', '3', '4'],
-        //   success: (index)=>{
-        //     console.log(index)
-        //   },
-        //   fail: (e) => {
-        //     console.log(e)
-        //   },
-        //   itemColor: '#b23',
-        // })
-
-        Taro.showLoading({
-          "title": "123",
-          "mask": false,
-          "success": () => {
-            console.log('success')
-          }
-        })
     }
 
     cardClick(doctor: DoctorModel) {
