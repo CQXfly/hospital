@@ -32,6 +32,7 @@ export default class Loading extends Component {
             UserManager.getInstance().updateToken(res.token)
             CreateDir(opid)
             console.log('let me',res)
+            Taro.clearStorageSync()
             if (res.type == 1) {
                 let mo = res.userInfo as UserPatientModel
                 console.log('loginrequest: ', mo)
