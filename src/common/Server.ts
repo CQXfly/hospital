@@ -45,6 +45,12 @@ export const LoginRequest = async function loginRequest(params:UserLoginRequestP
     }
 }
 
+export const GetLessonCategoryRequest = async function getLessonCategoryRequest() {
+    {
+        return await request<string[]>({method: RequestMethod.Get, path: '/lesson/categoryList', params: {}})
+    }
+}
+
 export const GetLessonListRequest = async function getLessonListRequest(params: GetLessonsRequestParams) {
     {
         return await request<[LessonModel]>({method: RequestMethod.Get, path: '/lesson/list', params})

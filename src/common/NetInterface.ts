@@ -1,6 +1,7 @@
 
 export interface GetLessonsRequestParams {
     page: number
+    category?: string
 }
 
 export interface UserLoginRequestParams {
